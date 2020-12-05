@@ -1,8 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Удалить задание</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+
+	body{
+		background-color: #638CB8;
+	}
+
+	input{
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+	}
+
+	input::placeholder {
+	  color: #d3d3d3;
+	}
+
+	.submit{
+		background-color: #ffffff;
+	}
+
+	.center-column{
+		width:1000px;
+		margin: 20px auto;
+		padding:20px;
+		background-color: #fff;
+		border-radius: 3px;
+		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+	}
+
+	.item-row{
+		background-color: #666666;
+		margin: 10px;
+		padding: inherit;
+		border-radius: 3px;
+		color: #fff;
+		font-size: 16px;
+		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+        display: flex;
+        flex-direction: row;
+	}
+    .left{
+        padding: 15px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 16px;
+        position: static;
+        align-self: auto;
+        margin: inherit;
+
+    }
+    .right{
+        padding: 15px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 16px;
+        position: static;
+        align-self: auto;
+        margin: inherit;
+        margin-inline-start: auto;
+    }
+
+	.btn-danger{
+		background-color: #ffae19;
+		border-color: #e59400;
+	}
+
+</style>
+
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     <h3>Вы уверены, что хотите удалить "{{ task }}"</h3>
