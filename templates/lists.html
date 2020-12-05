@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    Главная
+{% endblock %}
+
+
+{% block email %}
+    <a class="btn btn-sm btn-info" href="{% url 'update-email' %}">Редактировать почту</a>
+{% endblock %}
+
+
+{% block main %}
+    <div class="row" style="text-align: center; flex-flow: column; margin: 20px;">
+        <div class="alert alert-primary" role="alert" >
+            {% if user.is_authenticated %}
+                Ваши списки находятся во вкладке "Мои списки"
+            {% else %}
+                Зарегистрируйтесь или войдите, чтобы начать
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
