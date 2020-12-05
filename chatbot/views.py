@@ -5,7 +5,7 @@ from .forms import *
 # Create your views here.
 
 
-def basic(request):
+def start(request):
     return render(request, 'tasks/stayon.html')
 
 
@@ -32,7 +32,7 @@ def update_task(request, pk):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('/list')
+            return redirect('start')
 
     context = {'form': form}
 
@@ -44,7 +44,7 @@ def delete_task(request, pk):
 
     if request.method == 'POST':
         task.delete()
-        return redirect('/list')
+        return redirect('/')
 
     context = {'task': task}
     return render(request, 'tasks/delete_task.html', context)
