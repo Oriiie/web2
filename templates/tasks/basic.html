@@ -49,6 +49,14 @@
         overflow: scroll; /* Добавляем полосы прокрутки */
         height: 450px; /* Высота блока */
 	}
+    .bot-column{
+		width: 450px;
+		margin-left: 5px;
+        margin-top: -148px;
+		padding: 15px;
+		background-color: pink;
+		border-radius: 10px;
+	}
 
 	.item-row{
 		background-color: #666666;
@@ -136,13 +144,29 @@
                         {% endif %}
                     </div>
                     <div class="right">
-                        <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">*</a>
+                        <a class="btn btn-sm btn-info"  href="{% url 'update_task' task.id %}">Нужно</a>
                         <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Удалить</a>
                     </div>
 
                 </div>
             {% endfor %}
         </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="bot-column">
+        Введите команду:
+        <form method="POST" action="start">
+            {% csrf_token %}
+            <p>{{ form.title }}
+                <button>Отправить</button>
+            </p>
+
+        </form>
+
+
+
+    </div>
         </div>
     </div>
     {% block main %}{% endblock %}

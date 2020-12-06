@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.start, name="index"),
     path('start', views.index, name="start"),
+    path('activebot', views.bot, name="bot"),
     path('update_task/<str:pk>/', views.update_task, name="update_task"),
     path('delete_task/<str:pk>/', views.delete_task, name="delete_task")
 ]
