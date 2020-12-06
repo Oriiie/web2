@@ -23,6 +23,23 @@ def index(request):
     return render(request, 'tasks/basic.html', context)
 
 
+def bot(request):
+    tasks = Task.objects.all().order_by('id')
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            for i in tasks:
+                if i.title == "Удалить":
+                    for task in tasks:
+                        task.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+        return redirect('start')
+
+
 def update_task(request, pk):
     task = Task.objects.get(id=pk)
 
