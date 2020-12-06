@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -10,6 +11,7 @@ def start(request):
     return render(request, 'tasks/stayon.html')
 
 
+@login_required(login_url="/sign-in")
 def index(request):
     tasks = Task.objects.all().order_by('id')
 
@@ -20,10 +22,11 @@ def index(request):
         return redirect('start')
 
     form = TaskForm()
-    context = {'tasks': tasks, 'form': form, 'l': list(tasks)}
+    context = {'tasks': tasks, 'form': form}
     return render(request, 'tasks/basic.html', context)
 
 
+@login_required(login_url="/sign-in")
 def bot(request):
     tasks = Task.objects.all().order_by('id')
     if request.method == 'POST':
@@ -32,8 +35,7 @@ def bot(request):
             form.save()
             for i in tasks:
                 if i.title == "Удалить":
-                    for task in tasks:
-                        task.delete()
+                    tasks.delete()
                     break
                 if i.title == "Помощь":
                     i.delete()
@@ -41,6 +43,7 @@ def bot(request):
         return redirect('start')
 
 
+@login_required(login_url="/sign-in")
 def update_task(request, pk):
     task = Task.objects.get(id=pk)
 
@@ -55,11 +58,14 @@ def update_task(request, pk):
         return redirect('start')
 
 
+@login_required(login_url="/sign-in")
 def delete_task(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
     return redirect('start')
 
+
+@login_required(login_url="/sign-in")
 def log_out(request):
     if request.method == 'POST':
         logout(request)
