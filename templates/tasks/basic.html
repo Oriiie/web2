@@ -11,14 +11,17 @@
 <style>
 
 	body{
-		background-color: #638CB8;
+		background-color: #ffffff;
 	}
 
 	input{
-		width: 100%;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
+        background: #ffffff; /* Цвет фона */
+        width: 250px; /* Ширина блока */
+        padding: 10px; /* Поля */
+        margin-top: 10px; /* Отступ сверху */
+        border: 2px solid #000; /* Параметры рамки */
+        -moz-box-sizing: border-box; /* Для Firefox */
+        box-sizing: border-box; /* Ширина блока с полями */
 	}
 
 	input::placeholder {
@@ -30,12 +33,21 @@
 	}
 
 	.center-column{
-		width:1000px;
-		margin: 20px auto;
-		padding:20px;
-		background-color: #fff;
-		border-radius: 3px;
-		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+		width: 450px;
+		margin: 20px;
+		padding: 15px;
+		background-color: pink;
+		border-radius: 10px;
+	}
+    .right-column{
+		width: 450px;
+		margin-left: 600px;
+        margin-top: -148px;
+		padding: 15px;
+		background-color: pink;
+		border-radius: 10px;
+        overflow: scroll; /* Добавляем полосы прокрутки */
+        height: 450px; /* Высота блока */
 	}
 
 	.item-row{
@@ -57,7 +69,6 @@
         position: static;
         align-self: auto;
         margin: inherit;
-
     }
     .right{
         padding: 15px;
@@ -78,10 +89,11 @@
 </style>
 
     <title>{% block title %}{% endblock %}</title>
+
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <a class="navbar-brand" href="/">allStored</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
             aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,29 +111,38 @@
 
 <div class="container-fluid">
     <div class="center-column">
-
-        <form method="POST" action="/">
+        Введите текст:
+        <form method="POST" action="start">
             {% csrf_token %}
-            {{form.title}}
-            <input class="btn btn-info" type="submit" name="Create Task">
+            <p>{{ form.title }}
+                <button>Отправить</button>
+            </p>
+
         </form>
 
-        <div class="todo-list">
+
+
+    </div>
+    <div class="container-fluid">
+        <div class="right-column">
+            <div>
             {% for task in tasks %}
                 <div class="item-row">
                     <div class="left">
                         {% if task.complete == True %}
-                        <strike>{{ loop.nextitem.id }}. {{task}}</strike>
+                        <strike>{{ loop.nextitem.id }}{{task}}</strike>
                         {% else %}
-                        <span>{{ loop.index }}. {{task}}</span>
+                        <span>{{ loop.index }}{{task}}</span>
                         {% endif %}
                     </div>
                     <div class="right">
-                        <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
-                        <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Delete</a>
+                        <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">*</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Удалить</a>
                     </div>
+
                 </div>
             {% endfor %}
+        </div>
         </div>
     </div>
     {% block main %}{% endblock %}

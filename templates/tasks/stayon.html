@@ -25,63 +25,14 @@
 	  color: #d3d3d3;
 	}
 
-	.submit{
-		background-color: #6BA3E8;
-	}
-
-	.center-column{
-		width:1000px;
-		margin: 20px auto;
-		padding:20px;
-		background-color: #fff;
-		border-radius: 3px;
-		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
-	}
-
-	.item-row{
-		background-color: #666666;
-		margin: 10px;
-		padding: inherit;
-		border-radius: 3px;
-		color: #fff;
-		font-size: 16px;
-		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
-        display: flex;
-        flex-direction: row;
-	}
-    .left{
-        padding: 15px;
-        border-radius: 3px;
-        color: #fff;
-        font-size: 16px;
-        position: static;
-        align-self: auto;
-        margin: inherit;
-
-    }
-    .right{
-        padding: 15px;
-        border-radius: 3px;
-        color: #fff;
-        font-size: 16px;
-        position: static;
-        align-self: auto;
-        margin: inherit;
-        margin-inline-start: auto;
-    }
-
-	.btn-danger{
-		background-color: #ffae19;
-		border-color: #e59400;
-	}
 
 </style>
 
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
+<body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-    <a class="navbar-brand" href="/">allStore</a>
+    <a class="navbar-brand" href="/">allStored</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
             aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -90,7 +41,7 @@
     <div class="collapse navbar-collapse" id="navbarsExample05">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Артём<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="start">Артём<span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>
