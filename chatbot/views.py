@@ -20,17 +20,20 @@ def schedule(request):
     wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
     thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
     friday = Friday.objects.filter(user_id=request.user.id).order_by('id')
+    consult = Consult.objects.filter(user_id=request.user.id).order_by('id')
 
     mondayform = MondayForm()
     tuesdayform = TuesdayForm()
     wednesdayform = WednesdayForm()
     thursdayform = ThursdayForm()
     fridayform = FridayForm()
+    consultform = ConsultForm()
     context = {'monday': monday, 'tuesday': tuesday,
                'mondayform': mondayform, 'tuesdayform': tuesdayform,
                'wednesday': wednesday, 'wednesdayform': wednesdayform,
                'thursday': thursday, 'thursdayform': thursdayform,
-               'friday': friday, 'fridayform': fridayform}
+               'friday': friday, 'fridayform': fridayform,
+               'consult': consult, 'consultform': consultform}
     return render(request, 'tasks/schedule.html', context)
 
 
@@ -130,6 +133,21 @@ def fridayschedule(request):
 
 
 @login_required(login_url="/sign-in")
+def consultschedule(request):
+    consult = Consult.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        consultform = ConsultForm(request.POST)
+        if consultform.is_valid():
+            instance = consultform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+        return redirect('schedule')
+    consultform = ConsultForm()
+    context = {'consult': consult, 'consultform': consultform}
+    return render(request, 'tasks/schedule.html', context)
+
+
+@login_required(login_url="/sign-in")
 def monday_delete_task(request, pk):
     task = Monday.objects.get(id=pk)
     task.delete()
@@ -160,6 +178,13 @@ def thursday_delete_task(request, pk):
 @login_required(login_url="/sign-in")
 def friday_delete_task(request, pk):
     task = Friday.objects.get(id=pk)
+    task.delete()
+    return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def consult_delete_task(request, pk):
+    task = Consult.objects.get(id=pk)
     task.delete()
     return redirect('schedule')
 
@@ -252,6 +277,7 @@ def bottuesday(request):
         return redirect('schedule')
 
 
+@login_required(login_url="/sign-in")
 def botwednesday(request):
     wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
     if request.method == 'POST':
@@ -274,6 +300,7 @@ def botwednesday(request):
         return redirect('schedule')
 
 
+@login_required(login_url="/sign-in")
 def botthursday(request):
     thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
     if request.method == 'POST':
@@ -296,6 +323,7 @@ def botthursday(request):
         return redirect('schedule')
 
 
+@login_required(login_url="/sign-in")
 def botfriday(request):
     friday = Friday.objects.filter(user_id=request.user.id).order_by('id')
     if request.method == 'POST':
@@ -315,6 +343,25 @@ def botfriday(request):
                 if len(friday) > 4:
                     i.delete()
                     return redirect('schedule')
+        return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def botconsult(request):
+    consult = Consult.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = ConsultForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in consult:
+                if i.title == "Удалить":
+                    consult.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
         return redirect('schedule')
 
 
