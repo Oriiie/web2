@@ -16,12 +16,28 @@ def start(request):
 @login_required(login_url="/sign-in")
 def schedule(request):
     monday = Monday.objects.filter(user_id=request.user.id).order_by('id')
+    tuesday = Tuesday.objects.filter(user_id=request.user.id).order_by('id')
+    wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
+    thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
 
+    mondayform = MondayForm()
+    tuesdayform = TuesdayForm()
+    wednesdayform = WednesdayForm()
+    thursdayform = ThursdayForm()
+    context = {'monday': monday, 'tuesday': tuesday,
+               'mondayform': mondayform, 'tuesdayform': tuesdayform,
+               'wednesday': wednesday, 'wednesdayform': wednesdayform,
+               'thursday': thursday, 'thursdayform': thursdayform}
+    return render(request, 'tasks/schedule.html', context)
+
+
+@login_required(login_url="/sign-in")
+def mondayschedule(request):
+    monday = Monday.objects.filter(user_id=request.user.id).order_by('id')
     if request.method == 'POST':
-
-        form = MondayForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
+        mondayform = MondayForm(request.POST)
+        if mondayform.is_valid():
+            instance = mondayform.save(commit=False)
             instance.user = request.user
             instance.save()
             for i in monday:
@@ -29,15 +45,92 @@ def schedule(request):
                     i.delete()
                     return redirect('schedule')
         return redirect('schedule')
-
-    form = MondayForm()
-    context = {'tasks': monday, 'form': form}
+    mondayform = MondayForm()
+    context = {'monday': monday, 'mondayform': mondayform}
     return render(request, 'tasks/schedule.html', context)
 
 
 @login_required(login_url="/sign-in")
-def schedule_delete_task(request, pk):
+def tuesdayschedule(request):
+    tuesday = Tuesday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        tuesdayform = TuesdayForm(request.POST)
+        if tuesdayform.is_valid():
+            instance = tuesdayform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in tuesday:
+                if len(tuesday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
+    tuesdayform = TuesdayForm()
+    context = {'tuesday': tuesday, 'tuesdayform': tuesdayform}
+    return render(request, 'tasks/schedule.html', context)
+
+
+@login_required(login_url="/sign-in")
+def wednesdayschedule(request):
+    wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        wednesdayform = WednesdayForm(request.POST)
+        if wednesdayform.is_valid():
+            instance = wednesdayform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in wednesday:
+                if len(wednesday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
+    wednesdayform = WednesdayForm()
+    context = {'wednesday': wednesday, 'wednesdayform': wednesdayform}
+    return render(request, 'tasks/schedule.html', context)
+
+
+@login_required(login_url="/sign-in")
+def thursdayschedule(request):
+    thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        thursdayform = ThursdayForm(request.POST)
+        if thursdayform.is_valid():
+            instance = thursdayform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in thursday:
+                if len(thursday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
+    thursdayform = ThursdayForm()
+    context = {'thursday': thursday, 'thursdayform': thursdayform}
+    return render(request, 'tasks/schedule.html', context)
+
+
+@login_required(login_url="/sign-in")
+def monday_delete_task(request, pk):
     task = Monday.objects.get(id=pk)
+    task.delete()
+    return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def tuesday_delete_task(request, pk):
+    task = Tuesday.objects.get(id=pk)
+    task.delete()
+    return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def wednesday_delete_task(request, pk):
+    task = Wednesday.objects.get(id=pk)
+    task.delete()
+    return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def thursday_delete_task(request, pk):
+    task = Thursday.objects.get(id=pk)
     task.delete()
     return redirect('schedule')
 
@@ -85,9 +178,8 @@ def bot(request):
 
 
 @login_required(login_url="/sign-in")
-def botday(request):
+def botmonday(request):
     monday = Monday.objects.filter(user_id=request.user.id).order_by('id')
-
     if request.method == 'POST':
         form = MondayForm(request.POST)
         if form.is_valid():
@@ -98,12 +190,81 @@ def botday(request):
                 if i.title == "Удалить":
                     monday.delete()
                     break
-            for i in monday:
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+            for i in monday:
+                if len(monday) > 4:
+                    i.delete()
+                    return redirect('schedule')
         return redirect('schedule')
 
+
+@login_required(login_url="/sign-in")
+def bottuesday(request):
+    tuesday = Tuesday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = TuesdayForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in tuesday:
+                if i.title == "Удалить":
+                    tuesday.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+            for i in tuesday:
+                if len(tuesday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
+
+
+def botwednesday(request):
+    wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = WednesdayForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in wednesday:
+                if i.title == "Удалить":
+                    wednesday.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+            for i in wednesday:
+                if len(wednesday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
+
+
+def botthursday(request):
+    thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = ThursdayForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in thursday:
+                if i.title == "Удалить":
+                    thursday.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+            for i in thursday:
+                if len(thursday) > 4:
+                    i.delete()
+                    return redirect('schedule')
+        return redirect('schedule')
 
 
 @login_required(login_url="/sign-in")

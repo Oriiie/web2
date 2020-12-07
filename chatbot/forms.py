@@ -19,6 +19,40 @@ class MondayForm(forms.ModelForm):
         fields = ['title']
 
 
+class TuesdayForm(forms.ModelForm):
+
+    class Meta:
+        model = Tuesday
+        fields = ['title']
+
+
+class WednesdayForm(forms.ModelForm):
+
+    class Meta:
+        model = Wednesday
+        fields = ['title']
+
+
+class ThursdayForm(forms.ModelForm):
+
+    class Meta:
+        model = Thursday
+        fields = ['title']
+
+
+class FridayForm(forms.ModelForm):
+
+    class Meta:
+        model = Friday
+        fields = ['title']
+
+
+class ConsultForm(forms.ModelForm):
+
+    class Meta:
+        model = Consult
+        fields = ['title']
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
