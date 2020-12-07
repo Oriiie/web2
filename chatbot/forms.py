@@ -12,6 +12,13 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'complete']
 
 
+class MondayForm(forms.ModelForm):
+
+    class Meta:
+        model = Monday
+        fields = ['title']
+
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
