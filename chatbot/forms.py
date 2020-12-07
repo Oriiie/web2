@@ -8,8 +8,8 @@ from .models import *
 class TaskForm(forms.ModelForm):
 
     class Meta:
-        model = Task
-        fields = '__all__'
+        model = Note
+        fields = ['title', 'complete']
 
 
 class UserRegistrationForm(UserCreationForm):

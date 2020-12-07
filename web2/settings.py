@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'web2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bot1',
+        'NAME': 'botweb',
         'USER': 'django',
         'PASSWORD': 'pass',
         'HOST': 'localhost',

@@ -13,12 +13,14 @@ def start(request):
 
 @login_required(login_url="/sign-in")
 def index(request):
-    tasks = Task.objects.all().order_by('id')
+    tasks = Note.objects.filter(user_id=request.user.id).order_by('id')
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
         return redirect('start')
 
     form = TaskForm()
@@ -28,15 +30,19 @@ def index(request):
 
 @login_required(login_url="/sign-in")
 def bot(request):
-    tasks = Task.objects.all().order_by('id')
+    tasks = Note.objects.filter(user_id=request.user.id).order_by('id')
+
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             for i in tasks:
                 if i.title == "Удалить":
                     tasks.delete()
                     break
+            for i in tasks:
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
@@ -45,7 +51,7 @@ def bot(request):
 
 @login_required(login_url="/sign-in")
 def update_task(request, pk):
-    task = Task.objects.get(id=pk)
+    task = Note.objects.get(id=pk)
 
     if not task.complete:
         task.complete = True
@@ -60,7 +66,7 @@ def update_task(request, pk):
 
 @login_required(login_url="/sign-in")
 def delete_task(request, pk):
-    task = Task.objects.get(id=pk)
+    task = Note.objects.get(id=pk)
     task.delete()
     return redirect('start')
 
