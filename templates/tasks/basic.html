@@ -12,7 +12,6 @@
 
 	body{
 		background-color: #ffffff;
-        zoom: 1.75;
 	}
 
 	input{
@@ -158,7 +157,7 @@
                 <div class="item-row">
                     <div class="left">
                         {% if task.complete == True %}
-                        <strike>{{ loop.nextitem.id }}{{task}}</strike>
+                        <u>{{ loop.nextitem.id }}{{task}}</u>
                         {% else %}
                         <span>{{ loop.index }}{{task}}</span>
                         {% endif %}
