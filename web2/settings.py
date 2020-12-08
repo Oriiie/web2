@@ -13,8 +13,6 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import dj_database_url
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -22,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'mrhy#b4+l*$&wl7fsz03t#sw5x=sh4=if8z6*ut&uqt^_bt__q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -91,8 +89,6 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
