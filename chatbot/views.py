@@ -687,8 +687,8 @@ def delete_task(request, pk):
 def log_out(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('start')
-    return redirect('start')
+        return redirect('index')
+    return redirect('index')
 
 
 def sign_in(request):
