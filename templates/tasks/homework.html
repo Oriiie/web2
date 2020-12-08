@@ -273,17 +273,17 @@
     </div>
         </div>
     <div class="easy">
-        Запиши домашние задания:
-        <form method="POST" action="mediumhomework">
+        Запиши TODO-задания:
+        <form method="POST" action="easyhomework">
             {% csrf_token %}
-            {{ mediumhomeworkform.title }} <button>Отправить</button>
+            {{ easyhomeworkform.title }} <button>Отправить</button>
         </form>
 
     </div>
     <div class="easytask">
             <div>
-            Домашние задания
-            {% for task in mediumhomework %}
+            TODO
+            {% for task in easyhomework %}
                 <div class="item-row">
                     <div class="left">
                         {% if task.complete == True %}
@@ -293,7 +293,7 @@
                         {% endif %}
                     </div>
                     <div class="right">
-                        <a class="btn btn-sm btn-danger" href="{% url 'mediumhomework_delete_task' task.id %}" size="10px">Х</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'easyhomework_delete_task' task.id %}" size="10px">Х</a>
                     </div>
 
                 </div>
@@ -303,9 +303,9 @@
     <div class="container-fluid">
         <div class="easybot">
         Введите команду:
-        <form method="POST" action="botmediumhomework">
+        <form method="POST" action="boteasyhomework">
             {% csrf_token %}
-            <p>{{ mediumhomeworkform.title }}
+            <p>{{ easyhomeworkform.title }}
                 <button>Отправить</button>
             </p>
         </form>

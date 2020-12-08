@@ -204,14 +204,24 @@ def mediumhomework_delete_task(request, pk):
 
 
 @login_required(login_url="/sign-in")
+def easyhomework_delete_task(request, pk):
+    task = HomeworkEasy.objects.get(id=pk)
+    task.delete()
+    return redirect('homework')
+
+
+@login_required(login_url="/sign-in")
 def homework(request):
     hardhomework = HomeworkImportant.objects.filter(user_id=request.user.id).order_by('id')
     mediumhomework = HomeworkMedium.objects.filter(user_id=request.user.id).order_by('id')
+    easyhomework = HomeworkEasy.objects.filter(user_id=request.user.id).order_by('id')
 
     hardhomeworkform = HomeworkImportantForm()
     mediumhomeworkform = HomeworkMediumForm()
+    easyhomeworkform = HomeworkEasyForm()
     context = {'hardhomework': hardhomework, 'hardhomeworkform': hardhomeworkform,
-               'mediumhomework': mediumhomework, 'mediumhomeworkform': mediumhomeworkform}
+               'mediumhomework': mediumhomework, 'mediumhomeworkform': mediumhomeworkform,
+               'easyhomework': easyhomework, 'easyhomeworkform': easyhomeworkform}
     return render(request, 'tasks/homework.html', context)
 
 
@@ -242,6 +252,21 @@ def mediumhomework(request):
         return redirect('homework')
     mediumhomeworkform = HomeworkMediumForm()
     context = {'mediumhomework': mediumhomework, 'mediumhomeworkform': mediumhomeworkform}
+    return render(request, 'tasks/homework.html', context)
+
+
+@login_required(login_url="/sign-in")
+def easyhomework(request):
+    easyhomework = HomeworkEasy.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        easyhomeworkform = HomeworkEasyForm(request.POST)
+        if easyhomeworkform.is_valid():
+            instance = easyhomeworkform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+        return redirect('homework')
+    easyhomeworkform = HomeworkEasyForm()
+    context = {'easyhomework': easyhomework, 'easyhomeworkform': easyhomeworkform}
     return render(request, 'tasks/homework.html', context)
 
 
@@ -429,6 +454,25 @@ def botmediumhomework(request):
             for i in mediumhomework:
                 if i.title == "Удалить":
                     mediumhomework.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+        return redirect('homework')
+
+
+@login_required(login_url="/sign-in")
+def boteasyhomework(request):
+    easyhomework = HomeworkEasy.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = HomeworkEasyForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in easyhomework:
+                if i.title == "Удалить":
+                    easyhomework.delete()
                     break
                 if i.title == "Помощь":
                     i.delete()
