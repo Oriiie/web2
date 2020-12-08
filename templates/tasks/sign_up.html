@@ -10,7 +10,7 @@
     <title>Регистрация пользователя</title>
     <style>
         .center-column2{
-		width: 600px;
+		width: 300px;
 		margin: 20px auto;
 		padding:20px;
 		background-color: #fff;
@@ -28,9 +28,7 @@
                 <div class="form-group">
                     {{ field.label_tag }}<br>
                     {{ field }}<br>
-                    {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
+
                     {% for error in field.errors %}
                         <p class="form-control" style="color: firebrick">{{ error }}</p>
                     {% endfor %}

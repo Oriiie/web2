@@ -1,4 +1,7 @@
+import os
+
 from django.contrib.auth.decorators import login_required
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -301,10 +304,25 @@ def bot(request):
                 if i.title == "Удалить":
                     tasks.delete()
                     break
-            for i in tasks:
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    tasks = Note.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(tasks):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Сохраненное.txt', 'w') as file:
+                        file.write(f'Список сохраненных записей:\n{text}')
+                    if request.method == 'POST':
+                        if tasks.count() > 0:
+                            return FileResponse(open('Сохраненное.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Сохраненное.txt')
+                    return redirect('schedule')
         return redirect('start')
 
 
@@ -324,6 +342,22 @@ def botmonday(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    monday = Monday.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(monday):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Понедельник.txt', 'w') as file:
+                        file.write(f'Расписание понедельника:\n{text}')
+                    if request.method == 'POST':
+                        if monday.count() > 0:
+                            return FileResponse(open('Понедельник.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Понедельник.txt')
+                    return redirect('schedule')
             for i in monday:
                 if len(monday) > 4:
                     i.delete()
@@ -347,6 +381,22 @@ def bottuesday(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    tuesday = Tuesday.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(tuesday):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Вторник.txt', 'w') as file:
+                        file.write(f'Расписание вторника:\n{text}')
+                    if request.method == 'POST':
+                        if tuesday.count() > 0:
+                            return FileResponse(open('Вторник.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Вторник.txt')
+                    return redirect('schedule')
             for i in tuesday:
                 if len(tuesday) > 4:
                     i.delete()
@@ -370,6 +420,22 @@ def botwednesday(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    wednesday = Wednesday.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(wednesday):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Среда.txt', 'w') as file:
+                        file.write(f'Расписание среды:\n{text}')
+                    if request.method == 'POST':
+                        if wednesday.count() > 0:
+                            return FileResponse(open('Среда.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Среда.txt')
+                    return redirect('schedule')
             for i in wednesday:
                 if len(wednesday) > 4:
                     i.delete()
@@ -393,6 +459,22 @@ def botthursday(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    thursday = Thursday.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(thursday):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Четверг.txt', 'w') as file:
+                        file.write(f'Расписание четверга:\n{text}')
+                    if request.method == 'POST':
+                        if thursday.count() > 0:
+                            return FileResponse(open('Четверг.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Четверг.txt')
+                    return redirect('schedule')
             for i in thursday:
                 if len(thursday) > 4:
                     i.delete()
@@ -416,6 +498,22 @@ def botfriday(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    friday = Friday.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(friday):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Пятница.txt', 'w') as file:
+                        file.write(f'Расписание пятницы:\n{text}')
+                    if request.method == 'POST':
+                        if friday.count() > 0:
+                            return FileResponse(open('Пятница.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Пятница.txt')
+                    return redirect('schedule')
             for i in friday:
                 if len(friday) > 4:
                     i.delete()
@@ -439,6 +537,22 @@ def bothardhomework(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    hardhomework = HomeworkImportant.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(hardhomework):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Важное.txt', 'w') as file:
+                        file.write(f'Список важных заданий:\n{text}')
+                    if request.method == 'POST':
+                        if hardhomework.count() > 0:
+                            return FileResponse(open('Важное.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Важное.txt')
+                    return redirect('schedule')
         return redirect('homework')
 
 
@@ -458,6 +572,22 @@ def botmediumhomework(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    mediumhomework = HomeworkMedium.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(mediumhomework):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Домашка.txt', 'w') as file:
+                        file.write(f'Домашние задания:\n{text}')
+                    if request.method == 'POST':
+                        if mediumhomework.count() > 0:
+                            return FileResponse(open('Домашка.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Домашка.txt')
+                    return redirect('schedule')
         return redirect('homework')
 
 
@@ -477,6 +607,22 @@ def boteasyhomework(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    easyhomework = HomeworkEasy.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(easyhomework):
+                        text += f'{n + 1}. {el}\n'
+                    with open('TODO.txt', 'w') as file:
+                        file.write(f'TODO-list:\n{text}')
+                    if request.method == 'POST':
+                        if easyhomework.count() > 0:
+                            return FileResponse(open('TODO.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('TODO.txt')
+                    return redirect('schedule')
         return redirect('homework')
 
 
@@ -496,6 +642,22 @@ def botconsult(request):
                 if i.title == "Помощь":
                     i.delete()
                     return render(request, 'tasks/help.html')
+                if i.title == "Скачать":
+                    i.delete()
+                    consult = Consult.objects.filter(user_id=request.user.id).order_by('id')
+                    text = ''
+                    for n, el in enumerate(consult):
+                        text += f'{n + 1}. {el}\n'
+                    with open('Консультации.txt', 'w') as file:
+                        file.write(f'Расписание консультаций:\n{text}')
+                    if request.method == 'POST':
+                        if consult.count() > 0:
+                            return FileResponse(open('Консультации.txt', 'rb'), as_attachment=True)
+                        else:
+                            messages.warning(request, 'Список пуст')
+                            return redirect('schedule')
+                    os.remove('Консультации.txt')
+                    return redirect('schedule')
         return redirect('schedule')
 
 

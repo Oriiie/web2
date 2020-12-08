@@ -9,25 +9,32 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
-
-	body{
+    body{
 		background-color: #ffffff;
         zoom: 1.5;
 	}
+   .example {
+    border: 1px dashed #634f36; /* Параметры рамки */
+    background: #fffff5; /* Цвет фона */
+    font-family: "Courier New", Courier, monospace; /* Семейство шрифта */
+       margin-left: 100px;
+    padding: 7px; /* Поля вокруг текста */
 
-	input{
-		width: 100%;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
-	}
-
-	input::placeholder {
-	  color: #d3d3d3;
-	}
-
-
-</style>
+    white-space: pre; /* Учитываются все пробелы и переносы */
+       width: 1100px;
+   }
+   .exampleTitle {
+    border: 1px solid black; /* Параметры рамки */
+    border-bottom: none; /* Убираем линию снизу */
+    padding: 3px; /* Поля вокруг текста */
+    display: inline; /* Отображать как встроенный элемент */
+    background: #efecdf; /* Цвет фона */
+    font-weight: bold; /* Жирное начертание */
+    font-size: 90%; /* Размер шрифта */
+    margin: 0; /* Убираем отступы */
+    white-space: nowrap; /* Переносов в тексте нет */
+   }
+  </style>
 
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -71,5 +78,21 @@
     {% endif %}
     </div>
 </nav>
+<p class="exampleTitle">allStored</p>
+  <p class="example">
+
+      Спасибо за то, что воспользовались ресурсом allStored!
+
+      Если у вас еще нет аккаунта, нажмите на кнопку "Регистрация" в правом верхнем углу.
+
+      Нажмите "Войти", если у вас уже есть аккаунт. Неавторизованные пользователи доступ к ресурсу не имеют.
+
+      Данный ресурс использует чатботов, которые доступны в полях "Введите команду" под каждым из окон.
+
+      Отправьте боту команду "Помощь", чтобы получить функционал бота.
+
+                                            Приятного пользования!
+
+  </p>
 </body>
 </html>
