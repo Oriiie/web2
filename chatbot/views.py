@@ -300,6 +300,11 @@ def bot(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range (len(tasks)):
+                if i == (len(tasks)-1):
+                    if tasks[i].title != "Удалить" and tasks[i].title != "Помощь" and tasks[i].title != "Скачать":
+                        tasks[i].delete()
+                        return redirect('start')
             for i in tasks:
                 if i.title == "Удалить":
                     tasks.delete()
@@ -320,9 +325,9 @@ def bot(request):
                             return FileResponse(open('Сохраненное.txt', 'rb'), as_attachment=True)
                         else:
                             messages.warning(request, 'Список пуст')
-                            return redirect('schedule')
+                            return redirect('start')
                     os.remove('Сохраненное.txt')
-                    return redirect('schedule')
+                    return redirect('start')
         return redirect('start')
 
 
@@ -335,6 +340,11 @@ def botmonday(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(monday)):
+                if i == (len(monday)-1):
+                    if monday[i].title != "Удалить" and monday[i].title != "Помощь" and monday[i].title != "Скачать":
+                        monday[i].delete()
+                        return redirect('schedule')
             for i in monday:
                 if i.title == "Удалить":
                     monday.delete()
@@ -374,6 +384,11 @@ def bottuesday(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(tuesday)):
+                if i == (len(tuesday)-1):
+                    if tuesday[i].title != "Удалить" and tuesday[i].title != "Помощь" and tuesday[i].title != "Скачать":
+                        tuesday[i].delete()
+                        return redirect('schedule')
             for i in tuesday:
                 if i.title == "Удалить":
                     tuesday.delete()
@@ -413,6 +428,11 @@ def botwednesday(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(wednesday)):
+                if i == (len(wednesday)-1):
+                    if wednesday[i].title != "Удалить" and wednesday[i].title != "Помощь" and wednesday[i].title != "Скачать":
+                        wednesday[i].delete()
+                        return redirect('schedule')
             for i in wednesday:
                 if i.title == "Удалить":
                     wednesday.delete()
@@ -452,6 +472,11 @@ def botthursday(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(thursday)):
+                if i == (len(thursday)-1):
+                    if thursday[i].title != "Удалить" and thursday[i].title != "Помощь" and thursday[i].title != "Скачать":
+                        thursday[i].delete()
+                        return redirect('schedule')
             for i in thursday:
                 if i.title == "Удалить":
                     thursday.delete()
@@ -491,6 +516,11 @@ def botfriday(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(friday)):
+                if i == (len(friday)-1):
+                    if friday[i].title != "Удалить" and friday[i].title != "Помощь" and friday[i].title != "Скачать":
+                        friday[i].delete()
+                        return redirect('schedule')
             for i in friday:
                 if i.title == "Удалить":
                     friday.delete()
@@ -530,6 +560,11 @@ def bothardhomework(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(hardhomework)):
+                if i == (len(hardhomework) - 1):
+                    if hardhomework[i].title != "Удалить" and hardhomework[i].title != "Помощь" and hardhomework[i].title != "Скачать":
+                        hardhomework[i].delete()
+                        return redirect('homework')
             for i in hardhomework:
                 if i.title == "Удалить":
                     hardhomework.delete()
@@ -550,9 +585,9 @@ def bothardhomework(request):
                             return FileResponse(open('Важное.txt', 'rb'), as_attachment=True)
                         else:
                             messages.warning(request, 'Список пуст')
-                            return redirect('schedule')
+                            return redirect('homework')
                     os.remove('Важное.txt')
-                    return redirect('schedule')
+                    return redirect('homework')
         return redirect('homework')
 
 
@@ -565,6 +600,11 @@ def botmediumhomework(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(mediumhomework)):
+                if i == (len(mediumhomework) - 1):
+                    if mediumhomework[i].title != "Удалить" and mediumhomework[i].title != "Помощь" and mediumhomework[i].title != "Скачать":
+                        mediumhomework[i].delete()
+                        return redirect('homework')
             for i in mediumhomework:
                 if i.title == "Удалить":
                     mediumhomework.delete()
@@ -585,9 +625,9 @@ def botmediumhomework(request):
                             return FileResponse(open('Домашка.txt', 'rb'), as_attachment=True)
                         else:
                             messages.warning(request, 'Список пуст')
-                            return redirect('schedule')
+                            return redirect('homework')
                     os.remove('Домашка.txt')
-                    return redirect('schedule')
+                    return redirect('homework')
         return redirect('homework')
 
 
@@ -600,6 +640,11 @@ def boteasyhomework(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(easyhomework)):
+                if i == (len(easyhomework) - 1):
+                    if easyhomework[i].title != "Удалить" and easyhomework[i].title != "Помощь" and easyhomework[i].title != "Скачать":
+                        easyhomework[i].delete()
+                        return redirect('homework')
             for i in easyhomework:
                 if i.title == "Удалить":
                     easyhomework.delete()
@@ -620,9 +665,9 @@ def boteasyhomework(request):
                             return FileResponse(open('TODO.txt', 'rb'), as_attachment=True)
                         else:
                             messages.warning(request, 'Список пуст')
-                            return redirect('schedule')
+                            return redirect('homework')
                     os.remove('TODO.txt')
-                    return redirect('schedule')
+                    return redirect('homework')
         return redirect('homework')
 
 
@@ -635,6 +680,11 @@ def botconsult(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            for i in range(len(consult)):
+                if i == (len(consult) - 1):
+                    if consult[i].title != "Удалить" and consult[i].title != "Помощь" and consult[i].title != "Скачать":
+                        consult[i].delete()
+                        return redirect('schedule')
             for i in consult:
                 if i.title == "Удалить":
                     consult.delete()
