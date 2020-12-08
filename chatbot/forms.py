@@ -53,6 +53,27 @@ class ConsultForm(forms.ModelForm):
         model = Consult
         fields = ['title']
 
+
+class HomeworkImportantForm(forms.ModelForm):
+
+    class Meta:
+        model = HomeworkImportant
+        fields = ['title']
+
+
+class HomeworkMediumForm(forms.ModelForm):
+
+    class Meta:
+        model = HomeworkMedium
+        fields = ['title']
+
+
+class HomeworkEasyForm(forms.ModelForm):
+
+    class Meta:
+        model = HomeworkEasy
+        fields = ['title']
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:

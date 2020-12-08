@@ -189,8 +189,60 @@ def consult_delete_task(request, pk):
     return redirect('schedule')
 
 
+@login_required(login_url="/sign-in")
+def hardhomework_delete_task(request, pk):
+    task = HomeworkImportant.objects.get(id=pk)
+    task.delete()
+    return redirect('homework')
+
+
+@login_required(login_url="/sign-in")
+def mediumhomework_delete_task(request, pk):
+    task = HomeworkMedium.objects.get(id=pk)
+    task.delete()
+    return redirect('homework')
+
+
+@login_required(login_url="/sign-in")
 def homework(request):
-    return render(request, 'tasks/homework.html')
+    hardhomework = HomeworkImportant.objects.filter(user_id=request.user.id).order_by('id')
+    mediumhomework = HomeworkMedium.objects.filter(user_id=request.user.id).order_by('id')
+
+    hardhomeworkform = HomeworkImportantForm()
+    mediumhomeworkform = HomeworkMediumForm()
+    context = {'hardhomework': hardhomework, 'hardhomeworkform': hardhomeworkform,
+               'mediumhomework': mediumhomework, 'mediumhomeworkform': mediumhomeworkform}
+    return render(request, 'tasks/homework.html', context)
+
+
+@login_required(login_url="/sign-in")
+def hardhomework(request):
+    hardhomework = HomeworkImportant.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        hardhomeworkform = HomeworkImportantForm(request.POST)
+        if hardhomeworkform.is_valid():
+            instance = hardhomeworkform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+        return redirect('homework')
+    hardhomeworkform = HomeworkImportantForm()
+    context = {'hardhomework': hardhomework, 'hardhomeworkform': hardhomeworkform}
+    return render(request, 'tasks/homework.html', context)
+
+
+@login_required(login_url="/sign-in")
+def mediumhomework(request):
+    mediumhomework = HomeworkMedium.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        mediumhomeworkform = HomeworkMediumForm(request.POST)
+        if mediumhomeworkform.is_valid():
+            instance = mediumhomeworkform.save(commit=False)
+            instance.user = request.user
+            instance.save()
+        return redirect('homework')
+    mediumhomeworkform = HomeworkMediumForm()
+    context = {'mediumhomework': mediumhomework, 'mediumhomeworkform': mediumhomeworkform}
+    return render(request, 'tasks/homework.html', context)
 
 
 @login_required(login_url="/sign-in")
@@ -344,6 +396,44 @@ def botfriday(request):
                     i.delete()
                     return redirect('schedule')
         return redirect('schedule')
+
+
+@login_required(login_url="/sign-in")
+def bothardhomework(request):
+    hardhomework = HomeworkImportant.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = HomeworkImportantForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in hardhomework:
+                if i.title == "Удалить":
+                    hardhomework.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+        return redirect('homework')
+
+
+@login_required(login_url="/sign-in")
+def botmediumhomework(request):
+    mediumhomework = HomeworkMedium.objects.filter(user_id=request.user.id).order_by('id')
+    if request.method == 'POST':
+        form = HomeworkMediumForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            for i in mediumhomework:
+                if i.title == "Удалить":
+                    mediumhomework.delete()
+                    break
+                if i.title == "Помощь":
+                    i.delete()
+                    return render(request, 'tasks/help.html')
+        return redirect('homework')
 
 
 @login_required(login_url="/sign-in")
